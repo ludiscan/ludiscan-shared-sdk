@@ -55,6 +55,15 @@ public:
     /// PlayPositionLogDto members
 
     /// <summary>
+    /// Player identifier
+    /// </summary>
+    double getPlayer() const;
+    bool playerIsSet() const;
+    void unsetPlayer();
+
+    void setPlayer(double value);
+
+    /// <summary>
     /// 
     /// </summary>
     double getX() const;
@@ -101,6 +110,8 @@ public:
 
 
 protected:
+    double m_Player;
+    bool m_PlayerIsSet;
     double m_x;
     bool m_xIsSet;
     double m_y;

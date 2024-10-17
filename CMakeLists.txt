@@ -24,8 +24,8 @@ include_directories(${OPENSSL_INCLUDE_DIR})
 link_directories(${OPENSSL_LIBRARIES})
 
 # SDKライブラリの定義
-file(GLOB_RECURSE HEADER_FILES "include/*.h")
-file(GLOB_RECURSE SOURCE_FILES "src/*.cpp")
+file(GLOB_RECURSE HEADER_FILES "include/**/*.h")
+file(GLOB_RECURSE SOURCE_FILES "src/**/*.cpp")
 add_library(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 
 # CppRestSDKライブラリのリンク設定

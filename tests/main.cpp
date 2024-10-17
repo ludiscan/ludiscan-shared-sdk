@@ -8,8 +8,8 @@
 int main()
 {
     try {
-        bool success = SDKCore::CreatePlaySession("1", "2");
-
+        // bool success = SDKCore::CreatePlaySession("1", "2");
+        bool success = SDKCore::PostPlayersPositionLog("1", "20");
         if (success) {
             std::cout << "Play session created successfully!" << std::endl;
         } else {

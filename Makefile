@@ -1,7 +1,12 @@
 build:
-	mkdir -p build
+	rm -rf build
+	mkdir build
 	cd build && cmake ..
 	cd build && make
+	mkdir -p dist
+	cp build/libSDK.* dist
+	cp include/**/*.h dist
+	rm -rf build
 
 setup-linux:
 	sudo apt-get update
@@ -18,10 +23,10 @@ setup-windows:
 	./vcpkg install curl
 
 generate-cpp-client:
-	openapi-generator-cli generate -i http://localhost:3000/api-json -g cpp-restsdk -o ./dist/cpp-client
+	openapi-generator-cli generate -i http://localhost:3000/api-json -g cpp-restsdk -o ./build/cpp-client
 	mkdir -p ./src/CppRestOpenAPIClient
-	cp -r ./dist/cpp-client/src/* ./src/CppRestOpenAPIClient
+	cp -r ./build/cpp-client/src/* ./src/CppRestOpenAPIClient
 	mkdir -p ./include/CppRestOpenAPIClient
-	cp -r ./dist/cpp-client/include/* ./include
-	cp ./dist/cpp-client/Config.cmake.in ./
+	cp -r ./build/cpp-client/include/* ./include
+	cp ./build/cpp-client/Config.cmake.in ./
 

@@ -163,7 +163,7 @@ pplx::task<void> V0Api::playSessionControllerCreate(utility::string_t projectId,
         return void();
     });
 }
-pplx::task<void> V0Api::playSessionControllerDelete(double projectId, double sessionId) const
+pplx::task<void> V0Api::playSessionControllerDelete(utility::string_t projectId, utility::string_t sessionId) const
 {
 
 
@@ -269,7 +269,7 @@ pplx::task<void> V0Api::playSessionControllerDelete(double projectId, double ses
         return void();
     });
 }
-pplx::task<std::vector<std::shared_ptr<PlaySessionResponseDto>>> V0Api::playSessionControllerFindAll(double projectId) const
+pplx::task<std::vector<std::shared_ptr<PlaySessionResponseDto>>> V0Api::playSessionControllerFindAll(utility::string_t projectId) const
 {
 
 
@@ -396,7 +396,7 @@ pplx::task<std::vector<std::shared_ptr<PlaySessionResponseDto>>> V0Api::playSess
         return localVarResult;
     });
 }
-pplx::task<void> V0Api::playSessionControllerFindOne(double projectId, double sessionId) const
+pplx::task<void> V0Api::playSessionControllerFindOne(utility::string_t projectId, utility::string_t sessionId) const
 {
 
 
@@ -502,7 +502,7 @@ pplx::task<void> V0Api::playSessionControllerFindOne(double projectId, double se
         return void();
     });
 }
-pplx::task<void> V0Api::playSessionControllerFinish(double projectId, double sessionId) const
+pplx::task<void> V0Api::playSessionControllerFinish(utility::string_t projectId, utility::string_t sessionId) const
 {
 
 
@@ -608,7 +608,7 @@ pplx::task<void> V0Api::playSessionControllerFinish(double projectId, double ses
         return void();
     });
 }
-pplx::task<std::vector<std::shared_ptr<PlayPositionLogDto>>> V0Api::playerPositionLogControllerGet(double projectId, double sessionId) const
+pplx::task<std::vector<std::shared_ptr<PlayPositionLogDto>>> V0Api::playerPositionLogControllerGet(utility::string_t projectId, utility::string_t sessionId) const
 {
 
 
@@ -736,7 +736,7 @@ pplx::task<std::vector<std::shared_ptr<PlayPositionLogDto>>> V0Api::playerPositi
         return localVarResult;
     });
 }
-pplx::task<std::shared_ptr<DefaultSuccessResponse>> V0Api::playerPositionLogControllerPost(double projectId, double sessionId, std::vector<utility::string_t> utilityStringT) const
+pplx::task<std::shared_ptr<DefaultSuccessResponse>> V0Api::playerPositionLogControllerPost(utility::string_t projectId, utility::string_t sessionId, boost::optional<std::shared_ptr<HttpContent>> file) const
 {
 
 
@@ -778,8 +778,12 @@ pplx::task<std::shared_ptr<DefaultSuccessResponse>> V0Api::playerPositionLogCont
     localVarHeaderParams[utility::conversions::to_string_t("Accept")] = localVarResponseHttpContentType;
 
     std::unordered_set<utility::string_t> localVarConsumeHttpContentTypes;
-    localVarConsumeHttpContentTypes.insert( utility::conversions::to_string_t("application/json") );
+    localVarConsumeHttpContentTypes.insert( utility::conversions::to_string_t("multipart/form-data") );
 
+    if (file && *file != nullptr)
+    {
+        localVarFileParams[ utility::conversions::to_string_t("file") ] = *file;
+    }
 
     std::shared_ptr<IHttpBody> localVarHttpBody;
     utility::string_t localVarRequestHttpContentType;
@@ -788,38 +792,11 @@ pplx::task<std::shared_ptr<DefaultSuccessResponse>> V0Api::playerPositionLogCont
     if ( localVarConsumeHttpContentTypes.size() == 0 || localVarConsumeHttpContentTypes.find(utility::conversions::to_string_t("application/json")) != localVarConsumeHttpContentTypes.end() )
     {
         localVarRequestHttpContentType = utility::conversions::to_string_t("application/json");
-        web::json::value localVarJson;
-
-        {
-            std::vector<web::json::value> localVarJsonArray;
-            for( auto& localVarItem : utilityStringT )
-            {
-                localVarJsonArray.push_back(ModelBase::toJson(localVarItem));
-                
-            }
-            localVarJson = web::json::value::array(localVarJsonArray);
-        }
-        
-        localVarHttpBody = std::shared_ptr<IHttpBody>( new JsonBody( localVarJson ) );
     }
     // multipart formdata
     else if( localVarConsumeHttpContentTypes.find(utility::conversions::to_string_t("multipart/form-data")) != localVarConsumeHttpContentTypes.end() )
     {
         localVarRequestHttpContentType = utility::conversions::to_string_t("multipart/form-data");
-        std::shared_ptr<MultipartFormData> localVarMultipart(new MultipartFormData);
-
-        {
-            std::vector<web::json::value> localVarJsonArray;
-            for( auto& localVarItem : utilityStringT )
-            {
-                localVarJsonArray.push_back(ModelBase::toJson(localVarItem));
-            }
-            localVarMultipart->add(ModelBase::toHttpContent(utility::conversions::to_string_t("utilityStringT"), localVarJsonArray, utility::conversions::to_string_t("application/json")));
-        }
-        
-
-        localVarHttpBody = localVarMultipart;
-        localVarRequestHttpContentType += utility::conversions::to_string_t("; boundary=") + localVarMultipart->getBoundary();
     }
     else if (localVarConsumeHttpContentTypes.find(utility::conversions::to_string_t("application/x-www-form-urlencoded")) != localVarConsumeHttpContentTypes.end())
     {
@@ -1408,7 +1385,7 @@ pplx::task<std::vector<std::shared_ptr<Object>>> V0Api::usersControllerFindAll()
         return localVarResult;
     });
 }
-pplx::task<std::shared_ptr<Object>> V0Api::usersControllerFindOne(double id) const
+pplx::task<std::shared_ptr<Object>> V0Api::usersControllerFindOne(utility::string_t id) const
 {
 
 

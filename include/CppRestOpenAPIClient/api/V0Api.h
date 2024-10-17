@@ -27,6 +27,7 @@
 #include "CppRestOpenAPIClient/model/CreateUserDto.h"
 #include "CppRestOpenAPIClient/model/DefaultErrorResponse.h"
 #include "CppRestOpenAPIClient/model/DefaultSuccessResponse.h"
+#include "CppRestOpenAPIClient/HttpContent.h"
 #include "CppRestOpenAPIClient/Object.h"
 #include "CppRestOpenAPIClient/model/PlayPositionLogDto.h"
 #include "CppRestOpenAPIClient/model/PlaySessionResponseDto.h"
@@ -72,8 +73,8 @@ public:
     /// <param name="projectId"></param>
     /// <param name="sessionId"></param>
     pplx::task<void> playSessionControllerDelete(
-        double projectId,
-        double sessionId
+        utility::string_t projectId,
+        utility::string_t sessionId
     ) const;
     /// <summary>
     /// 
@@ -83,7 +84,7 @@ public:
     /// </remarks>
     /// <param name="projectId"></param>
     pplx::task<std::vector<std::shared_ptr<PlaySessionResponseDto>>> playSessionControllerFindAll(
-        double projectId
+        utility::string_t projectId
     ) const;
     /// <summary>
     /// 
@@ -94,8 +95,8 @@ public:
     /// <param name="projectId"></param>
     /// <param name="sessionId"></param>
     pplx::task<void> playSessionControllerFindOne(
-        double projectId,
-        double sessionId
+        utility::string_t projectId,
+        utility::string_t sessionId
     ) const;
     /// <summary>
     /// 
@@ -106,8 +107,8 @@ public:
     /// <param name="projectId"></param>
     /// <param name="sessionId"></param>
     pplx::task<void> playSessionControllerFinish(
-        double projectId,
-        double sessionId
+        utility::string_t projectId,
+        utility::string_t sessionId
     ) const;
     /// <summary>
     /// 
@@ -118,22 +119,22 @@ public:
     /// <param name="projectId"></param>
     /// <param name="sessionId"></param>
     pplx::task<std::vector<std::shared_ptr<PlayPositionLogDto>>> playerPositionLogControllerGet(
-        double projectId,
-        double sessionId
+        utility::string_t projectId,
+        utility::string_t sessionId
     ) const;
     /// <summary>
-    /// 
+    /// Upload binary player data
     /// </summary>
     /// <remarks>
     /// 
     /// </remarks>
     /// <param name="projectId"></param>
     /// <param name="sessionId"></param>
-    /// <param name="utilityStringT"></param>
+    /// <param name="file"> (optional, default to utility::conversions::to_string_t(&quot;&quot;))</param>
     pplx::task<std::shared_ptr<DefaultSuccessResponse>> playerPositionLogControllerPost(
-        double projectId,
-        double sessionId,
-        std::vector<utility::string_t> utilityStringT
+        utility::string_t projectId,
+        utility::string_t sessionId,
+        boost::optional<std::shared_ptr<HttpContent>> file
     ) const;
     /// <summary>
     /// 
@@ -179,7 +180,7 @@ public:
     /// </remarks>
     /// <param name="id"></param>
     pplx::task<std::shared_ptr<Object>> usersControllerFindOne(
-        double id
+        utility::string_t id
     ) const;
 
 protected:

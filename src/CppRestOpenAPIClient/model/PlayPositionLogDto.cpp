@@ -22,6 +22,8 @@ namespace model {
 
 PlayPositionLogDto::PlayPositionLogDto()
 {
+    m_Player = 0.0;
+    m_PlayerIsSet = false;
     m_x = 0.0;
     m_xIsSet = false;
     m_y = 0.0;
@@ -48,6 +50,10 @@ web::json::value PlayPositionLogDto::toJson() const
 
     web::json::value val = web::json::value::object();
     
+    if(m_PlayerIsSet)
+    {
+        val[utility::conversions::to_string_t(U("player"))] = ModelBase::toJson(m_Player);
+    }
     if(m_xIsSet)
     {
         val[utility::conversions::to_string_t(U("x"))] = ModelBase::toJson(m_x);
@@ -76,6 +82,16 @@ bool PlayPositionLogDto::fromJson(const web::json::value& val)
 {
     bool ok = true;
     
+    if(val.has_field(utility::conversions::to_string_t(U("player"))))
+    {
+        const web::json::value& fieldValue = val.at(utility::conversions::to_string_t(U("player")));
+        if(!fieldValue.is_null())
+        {
+            double refVal_setPlayer;
+            ok &= ModelBase::fromJson(fieldValue, refVal_setPlayer);
+            setPlayer(refVal_setPlayer);
+        }
+    }
     if(val.has_field(utility::conversions::to_string_t(U("x"))))
     {
         const web::json::value& fieldValue = val.at(utility::conversions::to_string_t(U("x")));
@@ -136,6 +152,10 @@ void PlayPositionLogDto::toMultipart(std::shared_ptr<MultipartFormData> multipar
     {
         namePrefix += utility::conversions::to_string_t(U("."));
     }
+    if(m_PlayerIsSet)
+    {
+        multipart->add(ModelBase::toHttpContent(namePrefix + utility::conversions::to_string_t(U("player")), m_Player));
+    }
     if(m_xIsSet)
     {
         multipart->add(ModelBase::toHttpContent(namePrefix + utility::conversions::to_string_t(U("x")), m_x));
@@ -167,6 +187,12 @@ bool PlayPositionLogDto::fromMultiPart(std::shared_ptr<MultipartFormData> multip
         namePrefix += utility::conversions::to_string_t(U("."));
     }
 
+    if(multipart->hasContent(utility::conversions::to_string_t(U("player"))))
+    {
+        double refVal_setPlayer;
+        ok &= ModelBase::fromHttpContent(multipart->getContent(utility::conversions::to_string_t(U("player"))), refVal_setPlayer );
+        setPlayer(refVal_setPlayer);
+    }
     if(multipart->hasContent(utility::conversions::to_string_t(U("x"))))
     {
         double refVal_setX;
@@ -200,6 +226,26 @@ bool PlayPositionLogDto::fromMultiPart(std::shared_ptr<MultipartFormData> multip
     return ok;
 }
 
+double PlayPositionLogDto::getPlayer() const
+{
+    return m_Player;
+}
+
+void PlayPositionLogDto::setPlayer(double value)
+{
+    m_Player = value;
+    m_PlayerIsSet = true;
+}
+
+bool PlayPositionLogDto::playerIsSet() const
+{
+    return m_PlayerIsSet;
+}
+
+void PlayPositionLogDto::unsetPlayer()
+{
+    m_PlayerIsSet = false;
+}
 double PlayPositionLogDto::getX() const
 {
     return m_x;
